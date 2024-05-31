@@ -1,0 +1,81 @@
+ProblemNo,FromStation,ToStation,Schedule,CostFunction
+0,NU,SCKR,mini-schedule.csv,stops
+1,BUI,CBN,mini-schedule.csv,stops
+2,BLAX,KMC,mini-schedule.csv,stops
+3,HBG,BNLW,mini-schedule.csv,stops
+4,MDS,KY,mini-schedule.csv,stops
+5,RBL,AME,mini-schedule.csv,stops
+6,KNW,BAU,mini-schedule.csv,stops
+7,SEH,VKR,mini-schedule.csv,stops
+8,AKD,BPL,mini-schedule.csv,stops
+9,DPA,J,mini-schedule.csv,stops
+10,PDNR,SIHO,schedule.csv,stops
+11,LPR,MLGH,schedule.csv,stops
+12,KGD,TDN,schedule.csv,stops
+13,VRB,NTZ,schedule.csv,stops
+14,RGU,DHR,schedule.csv,stops
+15,BSX,KHT,schedule.csv,stops
+16,SZY,PNBE,schedule.csv,stops
+17,KWI,BGRA,schedule.csv,stops
+18,TKHE,MDP,schedule.csv,stops
+19,KTKR,DRTP,schedule.csv,stops
+20,PLP,ALD,mini-schedule.csv,traveltime
+21,LAR,NZM,mini-schedule.csv,traveltime
+22,KMDR,KTE,mini-schedule.csv,traveltime
+23,SEH,JBP,mini-schedule.csv,traveltime
+24,PBN,SC,mini-schedule.csv,traveltime
+25,GCT,KOI,mini-schedule.csv,traveltime
+26,KGB,KLTR,mini-schedule.csv,traveltime
+27,LTA,JLW,mini-schedule.csv,traveltime
+28,AMLA,MZR,mini-schedule.csv,traveltime
+29,MGG,TAN,mini-schedule.csv,traveltime
+30,TLU,HRG,schedule.csv,traveltime
+31,BRRG,ARV,schedule.csv,traveltime
+32,KZK,KTES,schedule.csv,traveltime
+33,NRP,BMR,schedule.csv,traveltime
+34,KPQ,TKHE,schedule.csv,traveltime
+35,RTP,GWD,schedule.csv,traveltime
+36,CNL,DNM,schedule.csv,traveltime
+37,HN,TPPI,schedule.csv,traveltime
+38,HP,TMV,schedule.csv,traveltime
+39,SRJ,SNKR,schedule.csv,traveltime
+40,HRB,BIG,mini-schedule.csv,price
+41,R,DURG,mini-schedule.csv,price
+42,HBD,NRGR,mini-schedule.csv,price
+43,VKR,TLD,mini-schedule.csv,price
+44,BNLW,AGC,mini-schedule.csv,price
+45,MDS,DURG,mini-schedule.csv,price
+46,AGC,TKD,mini-schedule.csv,price
+47,UMR,SLKR,mini-schedule.csv,price
+48,HBD,HBJ,mini-schedule.csv,price
+49,KGB,DURG,mini-schedule.csv,price
+50,MBL,KBM,schedule.csv,price
+51,BEHS,GLH,schedule.csv,price
+52,MCN,LGCE,schedule.csv,price
+53,KIS,BRR,schedule.csv,price
+54,CTF,WRS,schedule.csv,price
+55,MDPR,DKLU,schedule.csv,price
+56,KKTA,PKRD,schedule.csv,price
+57,LUR,KANO,schedule.csv,price
+58,TRS,DDP,schedule.csv,price
+59,JRWN,GLY,schedule.csv,price
+60,KNW,NSL,mini-schedule.csv,arrivaltime 05:03:00
+61,MML,ODG,mini-schedule.csv,arrivaltime 13:20:00
+62,CHD,SLKR,mini-schedule.csv,arrivaltime 06:54:00
+63,BPHB,DURG,mini-schedule.csv,arrivaltime 11:25:00
+64,ALD,AAL,mini-schedule.csv,arrivaltime 03:53:00
+65,SGP,SJP,mini-schedule.csv,arrivaltime 23:00:00
+66,APR,R,mini-schedule.csv,arrivaltime 22:00:00
+67,ET,BZU,mini-schedule.csv,arrivaltime 08:55:00
+68,DPA,AGC,mini-schedule.csv,arrivaltime 16:00:00
+69,NED,KMC,mini-schedule.csv,arrivaltime 07:00:00
+70,MUP,NYG,schedule.csv,arrivaltime 12:35:00
+71,JMS,KUG,schedule.csv,arrivaltime 19:07:00
+72,STSN,JUR,schedule.csv,arrivaltime 14:25:00
+73,RSR,BCRD,schedule.csv,arrivaltime 07:15:00
+74,SHSK,PNDM,schedule.csv,arrivaltime 09:00:00
+75,TMGN,SNLR,schedule.csv,arrivaltime 23:30:00
+76,MTDM,FKA,schedule.csv,arrivaltime 23:00:00
+77,TETA,KMK,schedule.csv,arrivaltime 14:30:00
+78,GDR,SVPM,schedule.csv,arrivaltime 20:37:00
+79,CLJ,KRBP,schedule.csv,arrivaltime 22:01:00
