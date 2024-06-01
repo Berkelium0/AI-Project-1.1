@@ -36,10 +36,6 @@ def construct_graph(file_path):
                 "station_code": station_code,
             }
 
-            # travel_time = (arrival_time - departure_time).total_seconds()
-            # if travel_time < 0:  # handle next day arrival
-            #     travel_time += 24 * 3600
-
             if station_code in graph:
                 graph.nodes[station_code]['trains'].append(train_info)
             else:
@@ -48,77 +44,38 @@ def construct_graph(file_path):
 
             if previous_node:
                 if train_no == previous_node["train_no"]:
-                    graph.add_edge(previous_node["station_code"], station_code, stops=1, train_info=previous_node)
+
+                    traveltime = (arrival_time - previous_node["departure_time"]).total_seconds()
+                    if traveltime < 0:  # handle next day arrival
+                        traveltime += 24 * 3600
+
+                    graph.add_edge(previous_node["station_code"],
+                                   station_code,
+                                   stops=1,
+                                   traveltime=int(traveltime),
+                                   train_info=previous_node)
 
             previous_node = train_info
     return graph
 
 
-def extract_edges(graph, path):
-    visited_edges = []
-
-    # Iterate over each edge in the path
-    for u, v, key in path:
-        if 'visited' in graph[u][v][key]:
-            visited_edges.append((u, v, key, graph[u][v][key]))
-
-    return visited_edges
-
-
-def path_writer(path, graph):
-    edges = extract_edges(graph, path)
-    print(edges)
-    sol = ""
-    prev_edge = None
-    for stop in edges:
-        if prev_edge is None:
-            sol = sol + f'{stop[3]["train_info"]["train_no"]} : {stop[3]["train_info"]["islno"]}'
-        elif prev_edge["train_info"]["train_no"] != stop[3]["train_info"]["train_no"]:
-            sol = sol + (f' -> {prev_edge["train_info"]["islno"] + 1} ; {stop[3]["train_info"]["train_no"]} : '
-                         f'{stop[3]["train_info"]["islno"]}')
-        prev_edge = stop[3]
-    sol = sol + f' -> {edges[-1][3]["train_info"]["islno"] + 1}'
-    print(sol)
-    return sol
-
-
-def optimal_path_finder(row):
-    global mini_schedule_graph
-    global schedule_graph
-    print(row)
-    from_station = row["FromStation"]
-    to_station = row["ToStation"]
-    cost_function = row["CostFunction"]
-
-    graph = mini_schedule_graph if row["Schedule"] == "mini-schedule.csv" else schedule_graph
-
-    if cost_function == "stops":
-        weight = 'stops'  # Add stops calculation to edges if necessary
-    elif cost_function == "traveltime":
-        weight = 'weight'
-    elif cost_function == "price":
-        weight = 'price'  # Add price calculation to edges if necessary
-    else:
-        weight = 'arrivaltime'  # Handle arrival time cost calculation
-
-    path, cost = dijkstra(graph, from_station, to_station, weight=weight)
-
-    return {
-        "ProblemNo": row["ProblemNo"],
-        "Connection": path_writer(path, graph) if path else "No path",
-        "Cost": cost
-    }
-
-
-def clear_visited_tags(graph):
-    for u, v, key in graph.edges(keys=True):
-        if 'visited' in graph[u][v][key]:
-            del graph[u][v][key]['visited']
+def visualize_graph(graph):
+    print("visualizing")
+    pos = nx.spring_layout(graph, k=20)
+    plt.figure(figsize=(12, 8))
+    nx.draw(graph, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10, font_weight='bold',
+            edge_color='gray')
+    labels = nx.get_edge_attributes(graph, 'weight')
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels, font_color='red')
+    plt.title('Train Connection Graph')
+    plt.show()
 
 
 def dijkstra(graph, start, end, weight='weight'):
     # Clear visited tags before running the algorithm
-    clear_visited_tags(graph)
+    for u, v, key in graph.edges(keys=True):
+        if 'visited' in graph[u][v][key]:
+            del graph[u][v][key]['visited']
 
     # Priority queue to hold nodes to explore
     queue = []
@@ -166,16 +123,55 @@ def dijkstra(graph, start, end, weight='weight'):
     return path, costs[end]
 
 
-def visualize_graph(graph):
-    print("visualizing")
-    pos = nx.spring_layout(graph, k=20)
-    plt.figure(figsize=(12, 8))
-    nx.draw(graph, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10, font_weight='bold',
-            edge_color='gray')
-    labels = nx.get_edge_attributes(graph, 'weight')
-    nx.draw_networkx_edge_labels(graph, pos, edge_labels=labels, font_color='red')
-    plt.title('Train Connection Graph')
-    plt.show()
+def path_writer(path, graph):
+    edges = []
+
+    for u, v, key in path:
+        if 'visited' in graph[u][v][key]:
+            edges.append((u, v, key, graph[u][v][key]))
+    print(edges)
+
+    sol = ""
+    prev_edge = None
+    for stop in edges:
+        if prev_edge is None:
+            sol = sol + f'{stop[3]["train_info"]["train_no"]} : {stop[3]["train_info"]["islno"]}'
+        elif prev_edge["train_info"]["train_no"] != stop[3]["train_info"]["train_no"]:
+            sol = sol + (f' -> {prev_edge["train_info"]["islno"] + 1} ; {stop[3]["train_info"]["train_no"]} : '
+                         f'{stop[3]["train_info"]["islno"]}')
+        prev_edge = stop[3]
+    sol = sol + f' -> {edges[-1][3]["train_info"]["islno"] + 1}'
+    print(sol)
+
+    return sol
+
+
+def optimal_path_finder(row):
+    global mini_schedule_graph
+    global schedule_graph
+    print(row)
+    from_station = row["FromStation"]
+    to_station = row["ToStation"]
+    cost_function = row["CostFunction"]
+
+    graph = mini_schedule_graph if row["Schedule"] == "mini-schedule.csv" else schedule_graph
+
+    if cost_function == "stops":
+        weight = 'stops'
+    elif cost_function == "traveltime":
+        weight = 'traveltime'
+    elif cost_function == "price":
+        weight = 'price'
+    else:
+        weight = 'arrivaltime'
+
+    path, cost = dijkstra(graph, from_station, to_station, weight=weight)
+
+    return {
+        "ProblemNo": row["ProblemNo"],
+        "Connection": path_writer(path, graph) if path else "No path",
+        "Cost": cost
+    }
 
 
 def format_solution(solution):
@@ -186,7 +182,6 @@ def format_solution(solution):
     return problem_no, connections_str, cost
 
 
-# Sample usage
 def main():
     global mini_schedule_graph
     global schedule_graph
@@ -206,10 +201,9 @@ def main():
     # Get optimal path
     # solutions = problem_df.apply(optimal_path_finder, axis=1)
 
-    solutions = problem_df.iloc[:20].apply(optimal_path_finder, axis=1)
+    solutions = problem_df.iloc[:40].apply(optimal_path_finder, axis=1)
 
     # Save solutions to CSV
-    print(type(solutions))
     formatted_solutions = [format_solution(sol) for sol in solutions]
     solutions_df = pd.DataFrame(formatted_solutions, columns=['ProblemNo', 'Connection', 'Cost'])
     solutions_df.to_csv("my-example-solutions.csv", index=False)
