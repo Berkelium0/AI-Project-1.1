@@ -65,6 +65,17 @@ Before focusing on specific challenges, I first created the skeleton of the solv
    represent costs. Each edge carries relevant information such as travel time, distance, and train number.
 3. **Visualize the Graph**: Optionally, I checked the structure of the graph by visualizing it with `matplotlib` to
    ensure correctness.
+
+### Graph Visualizations
+
+#### Mini-Schedule Graph
+
+![Mini-Schedule Graph](Graphs/mini_schedule_plot.png)
+
+#### Full Schedule Graph
+
+![Full Schedule Graph](Graphs/schedule_plot.png)
+
 4. **Optimal Path Finder**: I created a pathfinder function that takes the required information from the
    problem statement and adjusts the weight function accordingly.
 5. **Dijkstra Function**: The pathfinder calls the Dijkstra function, implemented to handle different cost functions.
@@ -93,7 +104,6 @@ This is the most challenging part of the homework. The goal is to minimize the a
 arrival time, and Dijkstra's algorithm tries to find the earliest arrival. This part still has issues and is not fully
 implemented. The challenge lies in accurately adjusting for overnight travels and ensuring the correct sequence of train
 departures and arrivals.
-
 
 ## Code Breakdown
 
