@@ -1,6 +1,6 @@
 # Repository for AI Project 1.1
 
-**Topic:** [Find Train Connections](https://kwarc.info/teaching/AISysProj/SS24/assignment-1.1.pdf)
+**Assignment:** [Find Train Connections](https://kwarc.info/teaching/AISysProj/SS24/assignment-1.1.pdf)
 
 # Train Route Optimization
 
