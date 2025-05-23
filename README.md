@@ -1,8 +1,6 @@
-# Repository for ss24.1.1/team776
+# Repository for AI Project 1.1
 
-This is the repository for you solution. You can modify this README file any way you see fit.
-
-**Topic:** SS24 Assignment 1.1: Find Train Connections
+**Topic:** [Find Train Connections](https://kwarc.info/teaching/AISysProj/SS24/assignment-1.1.pdf)
 
 # Train Route Optimization
 
